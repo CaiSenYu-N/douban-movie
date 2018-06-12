@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=divice-width, initial-scale=1,maximum-scale=1">
   <title>豆瓣电影</title>
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_704872_ux3i2bogsrp.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_704872_ux3i2bogsrp.css">
 </head>
 <body>
   <main>
-    <section>1</section>
+    <section>
+      <!-- <div class="item">
+        <a href="#">
+          <div class="cover">
+            <img src="http://img7.doubanio.com/view/photo/s_ratio_poster/public/p480747492.jpg" alt="">
+          </div>
+          <div class="detail">
+            <h2>肖申克的救赎</h2>
+            <div class="extra"><span class="score">9.6分</span> / 1299199收藏</div>
+            <div class="extra">1994 / 犯罪、剧情</div>
+            <div class="extra">导演：弗兰克·德拉邦特</div>
+            <div class="extra">主演：蒂姆·罗宾斯</div>
+          </div>
+        </a>
+      </div> -->
+    </section>
     <section>2</section>
     <section>3</section>
   </main>
@@ -39,6 +54,11 @@
       background-color: #fff;
     }
 
+    a{
+      text-decoration: none;
+      color: #333;
+    }
+
     main{
       height: calc(100vh - 50px);
       overflow: scroll;
@@ -51,6 +71,40 @@
 
     main>section:first-child{
       display: block;
+    }
+
+    .item{
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      padding-top: 10px;
+    }
+
+    .item>a{
+      display: block;
+      display: flex;
+    }
+
+    .item .cover,
+    .item .cover img{
+      width: 70px;
+    }
+
+    .item .detail{
+      flex: 1;
+      padding-left: 10px;
+    }
+
+    .item .detail h2{
+      font-size: 16px;
+    }
+
+    .item .detail .extra{
+      color: #999;
+      margin-top: 4px;
+    }
+
+    .item .detail .score{
+      color: #ff5722;
     }
 
     footer{
@@ -83,6 +137,75 @@
       $('section').hide().eq(index).fadeIn()
       $(this).addClass('active').siblings().removeClass('active')
     })
+
+    var index = 0
+
+    start()
+
+    function start(){
+       $.ajax({
+         url: 'http://api.douban.com/v2/movie/top250',
+         type: 'GET',
+         data: {
+           start: index,
+           count: 20
+         },
+         dataType: 'jsonp'
+       }).done(function(ret){
+         console.log(ret)
+         setData(ret)
+         index+=20
+       }).fail(function(){
+         console.log('error ...')
+       })
+    }
+
+    $('main').scroll(function(){
+      if($('section').eq(0).height() -15 <= $('main').scrollTop() + $('main').height()){
+        start()
+      }
+    })
+
+    function setData(data){
+      data.subjects.forEach(function(movie){
+        var tpl = `<div class="item">
+        <a href="#">
+          <div class="cover">
+            <img src="" alt="">
+          </div>
+          <div class="detail">
+            <h2></h2>
+            <div class="extra"><span class="score"></span>分 / <span class="collect"></span>收藏</div>
+            <div class="extra"><span class="year"></span> / <span class="type"></span></div>
+            <div class="extra">导演：<span class="director"></span></div>
+            <div class="extra">主演：<span class="actor"></span></div>
+          </div>
+        </a>
+      </div>`
+        var $node = $(tpl)
+        $node.find('.cover img').attr('src',movie.images.large)
+        $node.find('.detail h2').text(movie.title)
+        $node.find('.score').text(movie.rating.average)
+        $node.find('.collect').text(movie.collect_count)
+        $node.find('.year').text(movie.year)
+        $node.find('.type').text(movie.genres.join('/'))
+        $node.find('.director').text(function(){
+          var directorArr = []
+          movie.directors.forEach(function(item){
+            directorArr.push(item.name)
+          })
+          return directorArr.join('、')
+        })
+        $node.find('.actor').text(function(){
+          var actorArr = []
+          movie.casts.forEach(function(item){
+            actorArr.push(item.name)
+          })
+          return actorArr.join('、')
+        })
+        $('section').eq(0).append($node)
+      })
+    }
 
 
   </script>
