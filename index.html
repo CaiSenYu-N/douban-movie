@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=divice-width, initial-scale=1,maximum-scale=1">
+  <title>豆瓣电影</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_704872_ux3i2bogsrp.css">
+</head>
+<body>
+  <main>
+    <section>1</section>
+    <section>2</section>
+    <section>3</section>
+  </main>
+  <footer>
+    <div class="active"><span class="iconfont icon-paihangbang"></span><span>TOP250</span></div>
+    <div><span class="iconfont icon-beimei"></span><span>北美</span></div>
+    <div><span class="iconfont icon-sousuo"></span><span>搜索</span></div>
+  </footer>
+
+  <style>
+
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body{
+      height: 100%;
+    }
+
+    body{
+      position: relative;
+      font-size: 12px;
+      line-height: 1.2;
+      background-color: #fff;
+    }
+
+    main{
+      height: calc(100vh - 50px);
+      overflow: scroll;
+      -webkit-overflow-scroll: touch;
+    }
+
+    main>section{
+      display: none;
+    }
+
+    main>section:first-child{
+      display: block;
+    }
+
+    footer{
+      position: absolute;
+      bottom: 0;
+      height: 50px;
+      width: 100%;
+      border-top: 1px solid #ccc;
+      display: flex;
+    }
+
+    footer>div{
+      flex: 1;
+      text-align: center;
+    }
+
+    footer .active{
+      color: #ff5722;
+    }
+
+    footer>div>span{
+      display: block;
+      padding-top: 7px;
+    }
+  </style>
+
+  <script>
+    $('footer>div').click(function(){
+      var index = $(this).index()
+      $('section').hide().eq(index).fadeIn()
+      $(this).addClass('active').siblings().removeClass('active')
+    })
+
+
+  </script>
+</body>
+</html>
