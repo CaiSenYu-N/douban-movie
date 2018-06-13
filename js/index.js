@@ -5,10 +5,14 @@ $('footer>div').click(function(){
 })
 
 var index = 0
+var isLoading = false
 
 start()
 
 function start(){
+  if(isLoading) return
+  isLoading = true
+  $('.loading').show()
    $.ajax({
      url: 'http://api.douban.com/v2/movie/top250',
      type: 'GET',
@@ -23,13 +27,47 @@ function start(){
      index+=20
    }).fail(function(){
      console.log('error ...')
+   }).always(function(){
+     isLoading = false
+     $('.loading').hide()
    })
 }
 
+function startBeimei(){
+  if(isLoadingBeimei) return
+  isLoadingBeimei = true
+  $('.loading').show()
+   $.ajax({
+     url: 'http://api.douban.com/v2/movie/top250',
+     type: 'GET',
+     data: {
+       start: index,
+       count: 20
+     },
+     dataType: 'jsonp'
+   }).done(function(ret){
+     console.log(ret)
+     setData(ret)
+     index+=20
+   }).fail(function(){
+     console.log('error ...')
+   }).always(function(){
+     isLoading = false
+     $('.loading').hide()
+   })
+}
+
+
+var clock
 $('main').scroll(function(){
-  if($('section').eq(0).height() -15 <= $('main').scrollTop() + $('main').height()){
-    start()
+  if(clock){
+    clearTimeout(clock)
   }
+  clock = setTimeout(function(){
+    if($('section').eq(0).height() -15 <= $('main').scrollTop() + $('main').height()){
+      start()
+    }
+  })
 })
 
 function setData(data){
@@ -48,6 +86,7 @@ function setData(data){
       </div>
     </a>
   </div>`
+
     var $node = $(tpl)
     $node.find('.cover img').attr('src',movie.images.large)
     $node.find('.detail h2').text(movie.title)
@@ -69,6 +108,6 @@ function setData(data){
       })
       return actorArr.join('、')
     })
-    $('section').eq(0).append($node)
+    $('#top250').append($node)
   })
 }

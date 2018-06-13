@@ -69,6 +69,21 @@ main>section:first-child{
   color: #ff5722;
 }
 
+.loading{
+  padding: 5px;
+  text-align: center;
+}
+
+.loading .iconfont{
+  display: inline-block;
+  animation: 1s rotate linear infinite;
+}
+
+@keyframes rotate{
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 footer{
   position: absolute;
   bottom: 0;
