@@ -3,17 +3,19 @@
 <head>
   <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.js"></script>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=divice-width, initial-scale=1,maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>豆瓣电影</title>
   <link rel="icon" href="image/titleimage.ico" type="image/x-icon">
   <link rel="Shortcut Icon" href="image/titleimage.ico" type="image/x-icon">
   <link rel="stylesheet" href="http://at.alicdn.com/t/font_704872_rhuk8onwnol.css">
   <link rel="stylesheet" href="css/style.css">
+  <meta name="referrer" content="never">
 </head>
 <body>
   <main>
-    <section>
-      <div id="top250">
+    <section id="top250">
+      <div class="container">
         <!-- <div class="item">
           <a href="#">
             <div class="cover">
@@ -31,15 +33,33 @@
       </div>
       <div class="loading"><span class="iconfont icon-loading"></span></div>
     </section>
-    <section>2</section>
-    <section>3</section>
+    <section id="beimei">
+      <div class="container"></div>
+      <div class="loading"><span class="iconfont icon-loading"></span></div>
+    </section>
+    <section id="search">
+      <div class="search-area">3
+        <input type="text" placeholder="搜索电影"><span class="button">搜索</span>
+      </div>
+      <div class="search-result">
+        <div class="loading"><span class="iconfont icon-loading"></span></div>
+      </div>
+    </section>
   </main>
   <footer>
-    <div class="active"><span class="iconfont icon-paihangbang"></span><span>TOP250</span></div>
-    <div><span class="iconfont icon-beimei"></span><span>北美</span></div>
-    <div><span class="iconfont icon-sousuo"></span><span>搜索</span></div>
+    <div class="active">
+      <span class="iconfont icon-paihangbang"></span><span>TOP250</span>
+    </div>
+    <div>
+      <span class="iconfont icon-beimei"></span><span>北美</span>
+    </div>
+    <div>
+      <span class="iconfont icon-sousuo"></span><span>搜索</span>
+    </div>
   </footer>
 
-  <script src="js/index.js"></script>
+  <script src="js/main.js">
+
+  </script>
 </body>
 </html>
