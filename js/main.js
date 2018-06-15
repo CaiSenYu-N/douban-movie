@@ -96,7 +96,6 @@ var top250 = {
 // beimei
 var usBox = {
   init: function(){
-    console.log('usBox ok')
     this.$element = $('#beimei')
     this.start()
   },
@@ -170,14 +169,16 @@ var usBox = {
 // 搜索
 var search = {
   init: function(){
-    console.log('usBox ok')
     this.$element = $('#search')
+    this.keyword = ''
     this.bind()
     this.start()
   },
   bind: function(){
-    this.$element.find('button').click(function(){
-
+    var _this = this
+    this.$element.find('.button').click(function(){
+    _this.keyword = _this.$element.find('input').val()
+    _this.start()
     })
   },
   start: function(){
@@ -188,12 +189,13 @@ var search = {
   },
   getData: function(callback){
     var _this = this
-    if(_this.isLoading) return;
-    _this.isLoading = true
     _this.$element.find('.loading').show()
 
     $.ajax({
-      url: 'http://api.douban.com/v2/movie/us_box',
+      url: 'http://api.douban.com/v2/movie/search',
+      data: {
+        q: _this.keyword
+      },
       dataType: 'jsonp'
     }).done(function(ret){
       callback&&callback(ret)
@@ -206,7 +208,6 @@ var search = {
   render: function(data){
     var _this = this
     data.subjects.forEach(function(movie){
-      movie = movie.subject
       var template = `<div class="item">
       <a href="#">
          <div class="cover">
@@ -243,7 +244,7 @@ var search = {
        })
        return actorArr.join('、')
      })
-      _this.$element.find('.container').append($node)
+      _this.$element.find('.search-result').append($node)
     })
   }
 }
