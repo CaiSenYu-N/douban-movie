@@ -27,7 +27,7 @@ var top250 = {
     _this.$element.find('.loading').show()
 
     $.ajax({
-      url: 'http://api.douban.com/v2/movie/top250',
+      url: 'https://api.douban.com/v2/movie/top250',
       data: {
         start: _this.index||0
       },
@@ -112,7 +112,7 @@ var usBox = {
     _this.$element.find('.loading').show()
 
     $.ajax({
-      url: 'http://api.douban.com/v2/movie/us_box',
+      url: 'https://api.douban.com/v2/movie/us_box',
       dataType: 'jsonp'
     }).done(function(ret){
       callback&&callback(ret)
@@ -192,7 +192,7 @@ var search = {
     _this.$element.find('.loading').show()
 
     $.ajax({
-      url: 'http://api.douban.com/v2/movie/search',
+      url: 'https://api.douban.com/v2/movie/search',
       data: {
         q: _this.keyword
       },
